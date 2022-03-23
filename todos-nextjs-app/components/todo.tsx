@@ -1,9 +1,13 @@
 import axios from 'axios'
+import { useState } from 'react'
 import Checkbox from './checkbox'
 
 export default function Todo({ todo, reloadList }) {
   //TODO: implement toggle checkbox
-  const toggleCompleted = () => {}
+  const [completed, setCompleted] = useState(todo.completed)
+  const toggleCompleted = () => {
+    setCompleted(!completed)
+  }
 
   const deleteTodo = () => {
     axios.delete('/api/todos/' + todo._id).then(reloadList)
@@ -11,7 +15,7 @@ export default function Todo({ todo, reloadList }) {
 
   return (
     <div className="flex justify-between space-x-3 bg-white dark:bg-gray-800 shadow-sm py-4 px-6 border-b dark:border-gray-700">
-      <Checkbox completed={todo.completed} toggleCompleted={toggleCompleted} />
+      <Checkbox completed={completed} toggleCompleted={toggleCompleted} />
       <p
         className={`flex-1 text-sm text-gray-900 dark:text-gray-100 ${
           todo.completed && 'line-through text-gray-400 dark:text-gray-500'
