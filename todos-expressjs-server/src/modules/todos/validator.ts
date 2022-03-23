@@ -16,5 +16,9 @@ export function validateTodoCreatePayload(
 export function validateTodoEditPayload(
   payload: ITodoPayload,
 ): Joi.ValidationResult<any> {
-  return null;
+  const schema = Joi.object({
+    text: Joi.string(),
+    completed: Joi.boolean(),
+  });
+  return schema.validate(payload);
 }

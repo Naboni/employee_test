@@ -1,12 +1,30 @@
+import { data } from 'autoprefixer'
 import axios from 'axios'
 import { useState } from 'react'
+import handler from '../pages/api/todos'
 import Checkbox from './checkbox'
 
 export default function Form({ reloadList }) {
   const [text, setText] = useState('')
-
+  const [loading, setLoading] = useState(false)
   // TODO: implement todo creation
-  const createTodo = (event) => {}
+  const createTodo = (event) => {
+    event.preventDefault()
+    setLoading(true)
+    axios
+      .post('http://localhost:5000/api/todos', {
+        text: text,
+      })
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
 
   return (
     <form
@@ -20,6 +38,7 @@ export default function Form({ reloadList }) {
         placeholder="Create a new todo..."
         value={text}
         onChange={(event) => setText(event.target.value)}
+        disabled={loading}
       />
     </form>
   )

@@ -20,6 +20,19 @@ router.post(
 );
 
 // TODO: Add routes for deleting and editing todos
+router.patch(
+  '/:id',
+  resultHandler(async (req: Request, res: Response) => {
+    return todosController.update(req.body, req.params.id);
+  }),
+);
+
 // Use route DELETE /:id for deletion amd PUT /:id for editing
+router.delete(
+  '/:id',
+  resultHandler(async (req: Request, res: Response) => {
+    return todosController.delete(req.params.id);
+  }),
+);
 
 export default router;
